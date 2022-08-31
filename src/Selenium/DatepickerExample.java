@@ -6,6 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DatepickerExample {
 
@@ -18,15 +21,30 @@ System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		driver.get("https://demo.guru99.com/test/upload/");
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
-  WebElement FileUpload = driver.findElement(By.name("uploadfile_0"));
   
-	FileUpload.sendKeys("C:\\Users\\dell\\Desktop\\uploadfile.txt");
+  
+
+	WebElement DatePicker = driver.findElement(By.id("dob"));	
+	DatePicker.click();
+
+//Explicit Wait
+	WebDriverWait wait = new WebDriverWait(driver,30);
+  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@class='ui-datepicker-month']")));
+
 	
-	WebElement TnC = driver.findElement(By.id("terms"));
-	TnC.click();
+	WebElement Month = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
+	Select ddMonth = new Select(Month);
+	ddMonth.selectByVisibleText("Jan");
 	
-	WebElement Submit = driver.findElement(By.id("submitbutton"));
-	Submit.click();
+	WebElement Year = driver.findElement(By.xpath("//select[@class='ui-datepicker-year']"));
+	Select ddYear = new Select(Year);
+	ddYear.selectByVisibleText("1985");
+	
+	WebElement Date = driver.findElement(By.xpath("//a[@data-date='1']"));	
+	Date.click();
+	
+	
+
 		
 	}
 
